@@ -1,0 +1,20 @@
+name: Extract H8N source
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reassemble and extract
+        run: |
+          cat h8n-source.zip.00 h8n-source.zip.01 h8n-source.zip.02 h8n-source.zip.03 > h8n-source.zip
+          unzip -q h8n-source.zip
+          rm h8n-source.zip h8n-source.zip.00 h8n-source.zip.01 h8n-source.zip.02 h8n-source.zip.03
+          git config user.name "MD HASAN"
+          git config user.email "hasan899420@users.noreply.github.com"
+          git add -A
+          git commit -m "H8N: import EE-removed n8n copy" || echo "nothing to commit"
+          git push
